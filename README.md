@@ -1,5 +1,9 @@
 # Classification d'Images Medicales - Detection de Pneumonie
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://deeplearning-pneumonie.streamlit.app)
+
+**[Tester l'application en ligne](https://deeplearning-pneumonie.streamlit.app)**
+
 Projet de Deep Learning B3 - Classification binaire de radiographies thoraciques (NORMAL vs PNEUMONIA)
 
 ## Objectif
