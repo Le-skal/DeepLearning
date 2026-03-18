@@ -15,7 +15,7 @@ import random
 
 # Configuration
 MODEL_PATH = Path('outputs/checkpoints/best_resnet18.pt')
-DATA_DIR = Path('data/chest_xray/test')
+DATA_DIR = Path('samples')
 IMG_SIZE = 224
 
 # Charger le modele
