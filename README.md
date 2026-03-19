@@ -6,7 +6,7 @@
 <p><em>Detecter la pneumonie sur des radiographies thoraciques avec des reseaux de neurones convolutifs</em></p>
 
 ![Status](https://img.shields.io/badge/status-operational-success?style=flat)
-![Accuracy](https://img.shields.io/badge/accuracy-89.42%25-blue?style=flat)
+![Accuracy](https://img.shields.io/badge/accuracy-91.03%25-blue?style=flat)
 ![Python](https://img.shields.io/badge/python-3.10+-brightgreen?style=flat&logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat)
 
@@ -57,7 +57,7 @@ Developper un pipeline CNN capable de distinguer des radiographies thoraciques *
 Conv(32) + ReLU + MaxPool
 Conv(64) + ReLU + MaxPool
 Conv(128) + ReLU + MaxPool
-Flatten -> Dense(128) + Dropout -> Dense(1) + Sigmoid
+Flatten -> Dense(128) + Dropout -> Dense(1)
 ```
 
 ### ResNet18 (Transfer Learning)
@@ -71,11 +71,11 @@ Flatten -> Dense(128) + Dropout -> Dense(1) + Sigmoid
 
 | Metrique | CNN Baseline | ResNet18 | Amelioration |
 |----------|--------------|----------|--------------|
-| **Accuracy** | 76.28% | **89.42%** | +13.14% |
-| **Precision** | 73.91% | **92.19%** | +18.28% |
-| **Recall** | 95.90% | 90.77% | -5.13% |
-| **Specificite** | 43.59% | **87.18%** | +43.59% |
-| **F1-Score** | 83.48% | **91.47%** | +7.99% |
+| **Accuracy** | 76.28% | **91.03%** | +14.75% |
+| **Precision** | 73.91% | **91.96%** | +18.05% |
+| **Recall** | 95.90% | 93.85% | -2.05% |
+| **Specificite** | 43.59% | **86.32%** | +42.73% |
+| **F1-Score** | 83.48% | **92.89%** | +9.41% |
 
 ### Visualisations
 
@@ -154,10 +154,40 @@ Executer les notebooks dans l'ordre :
 > **Cet outil est a but educatif uniquement.**
 > Il ne remplace pas un diagnostic medical professionnel.
 
+## 🔬 Discussion Critique des Limites
+
+### Limites du Dataset
+
+| Probleme | Impact | Piste d'amelioration |
+|----------|--------|----------------------|
+| **Set de validation trop petit** (16 images) | Difficulte a detecter l'overfitting pendant l'entrainement, metriques de validation instables | Fusionner val+test et faire un split 80/20, ou utiliser la cross-validation |
+| **Desequilibre des classes** (3:1 pneumonia/normal) | Le modele peut etre biaise vers la classe majoritaire | Utiliser class weights, oversampling (SMOTE), ou undersampling |
+| **Source unique** | Les images proviennent d'un seul hopital (Guangzhou) - biais demographique et materiel | Valider sur des datasets externes (NIH ChestX-ray14, CheXpert) |
+
+### Limites du Modele
+
+- **Pas de distinction bacterien/viral** : Le dataset contient des pneumonies bacteriennes et virales melangees, mais le modele ne les distingue pas
+- **Sensibilite au preprocessing** : Les performances dependent fortement du redimensionnement et de la normalisation
+- **Boite noire** : Meme avec Grad-CAM, on ne sait pas exactement quels patterns radiologiques le modele detecte
+
+### Limites Methodologiques
+
+- **Pas de validation croisee** : Les resultats peuvent varier selon le split train/test
+- **Hyperparametres non optimises** : Pas de grid search ou random search systematique
+- **Seuil de decision fixe a 0.5** : En contexte medical, un seuil plus bas pourrait etre preferable pour maximiser le recall (eviter les faux negatifs)
+
+### Limites pour un Usage Clinique
+
+- **Pas de calibration des probabilites** : Les scores de confiance ne refletent pas les vraies probabilites
+- **Pas de gestion de l'incertitude** : Le modele donne toujours une prediction, meme sur des images hors distribution
+- **Absence de validation clinique** : Aucun test sur des cas reels avec verification par des radiologues
+
+> **Note** : Ces limites sont normales pour un projet pedagogique de 10 jours. Un deploiement clinique reel necessiterait des validations beaucoup plus poussees.
+
 ## 🎓 Conclusion
 
-- Le **Transfer Learning avec ResNet18** ameliore significativement les performances (+13% accuracy)
-- La **specificite** passe de 44% a 87% (meilleure detection des cas normaux)
+- Le **Transfer Learning avec ResNet18** ameliore significativement les performances (+15% accuracy)
+- La **specificite** passe de 44% a 86% (meilleure detection des cas normaux)
 - **Grad-CAM** permet de verifier que le modele regarde les bonnes regions
 - Le pipeline est **reproductible** et bien documente
 

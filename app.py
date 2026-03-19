@@ -27,8 +27,8 @@ def load_model():
         nn.Linear(num_features, 256),
         nn.ReLU(),
         nn.Dropout(0.5),
-        nn.Linear(256, 1),
-        nn.Sigmoid()
+        nn.Linear(256, 1)
+        # Pas de Sigmoid - on l'applique a l'inference
     )
     model.load_state_dict(torch.load(MODEL_PATH, map_location='cpu'))
     model.eval()
@@ -82,7 +82,7 @@ class GradCAM:
         cam = cam - cam.min()
         cam = cam / (cam.max() + 1e-8)
 
-        return cam.squeeze().cpu().numpy(), output.item()
+        return cam.squeeze().cpu().numpy(), torch.sigmoid(output).item()
 
 def predict_and_display(image, model):
     """Fait la prediction et affiche les resultats"""
@@ -97,7 +97,8 @@ def predict_and_display(image, model):
     img_tensor.requires_grad = True
 
     with torch.no_grad():
-        prob = model(img_tensor).item()
+        logit = model(img_tensor)
+        prob = torch.sigmoid(logit).item()  # Convertir logit en probabilite
 
     prediction = "PNEUMONIA" if prob > 0.5 else "NORMAL"
     confidence = prob if prob > 0.5 else 1 - prob
@@ -157,8 +158,8 @@ st.sidebar.info("""
 - PNEUMONIA : Pneumonie detectee
 
 **Performance:**
-- Accuracy: 89.42%
-- F1-Score: 91.47%
+- Accuracy: 91.03%
+- F1-Score: 92.89%
 """)
 
 st.sidebar.header("Avertissement")
