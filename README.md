@@ -6,7 +6,7 @@
 <p><em>Detecter la pneumonie sur des radiographies thoraciques avec des reseaux de neurones convolutifs</em></p>
 
 ![Status](https://img.shields.io/badge/status-operational-success?style=flat)
-![Accuracy](https://img.shields.io/badge/accuracy-91.03%25-blue?style=flat)
+![Accuracy](https://img.shields.io/badge/accuracy-90.38%25-blue?style=flat)
 ![Python](https://img.shields.io/badge/python-3.10+-brightgreen?style=flat&logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green?style=flat)
 
@@ -71,11 +71,11 @@ Flatten -> Dense(128) + Dropout -> Dense(1)
 
 | Metrique | CNN Baseline | ResNet18 | Amelioration |
 |----------|--------------|----------|--------------|
-| **Accuracy** | 76.44% | **91.03%** | +14.59% |
-| **Precision** | 72.97% | **91.96%** | +18.99% |
-| **Recall** | 98.97% | 93.85% | -5.12% |
-| **Specificite** | 38.89% | **86.32%** | +47.43% |
-| **F1-Score** | 84.00% | **92.89%** | +8.89% |
+| **Accuracy** | 76.44% | **90.38%** | +13.94% |
+| **Precision** | 72.97% | **90.24%** | +17.27% |
+| **Recall** | 98.97% | 94.87% | -4.10% |
+| **Specificite** | 38.89% | **82.91%** | +44.02% |
+| **F1-Score** | 84.00% | **92.50%** | +8.50% |
 
 ### Visualisations
 
@@ -186,8 +186,8 @@ Executer les notebooks dans l'ordre :
 
 ## 🎓 Conclusion
 
-- Le **Transfer Learning avec ResNet18** ameliore significativement les performances (+15% accuracy)
-- La **specificite** passe de 44% a 86% (meilleure detection des cas normaux)
+- Le **Transfer Learning avec ResNet18** ameliore significativement les performances (+14% accuracy)
+- La **specificite** passe de 39% a 83% (meilleure detection des cas normaux)
 - **Grad-CAM** permet de verifier que le modele regarde les bonnes regions
 - Le pipeline est **reproductible** et bien documente
 

@@ -158,8 +158,8 @@ st.sidebar.info("""
 - PNEUMONIA : Pneumonie detectee
 
 **Performance:**
-- Accuracy: 91.03%
-- F1-Score: 92.89%
+- Accuracy: 90.38%
+- F1-Score: 92.50%
 """)
 
 st.sidebar.header("Avertissement")
